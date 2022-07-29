@@ -8,7 +8,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
+import { ColorSchemeName, Pressable, Alert } from 'react-native';
+import {Auth, Hub} from 'aws-amplify';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -18,13 +19,44 @@ import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import Open from '../screens/open';
+import Login from '../screens/login';
+import Reset from '../screens/Reset';
+import SignUp from '../screens/signup';
+import Confirm from '../screens/confirm';
+import Splash from '../screens/Splash';
 
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+export default function Nvigation({ colorScheme}: { colorScheme: ColorSchemeName }) {
+  const [isLoggedIn, setIsLoggedIn] = React.useState(undefined);
+  const checkUser = async () =>{
+      try {
+        const auth = await Auth.currentAuthenticatedUser({bypassCache: true});
+        setIsLoggedIn(true);
+    } catch(e) {
+        //setIsLoggedIn("");
+    }
+  }
+  React.useEffect(() =>{
+    checkUser();
+  },[]);
+  React.useEffect(() =>{
+    const listener = () =>{
+
+    }
+    Hub.listen('auth', listener);
+    return () => Hub.remove('auth', listener);
+  },[]);
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <RootNavigator />
+      {
+        isLoggedIn ? (
+          <BottomTabNavigator/>
+        ):(
+          <AuthenStack />   
+        )
+      }
     </NavigationContainer>
   );
 }
@@ -93,6 +125,22 @@ function BottomTabNavigator() {
         }}
       />
     </BottomTab.Navigator>
+  );
+}
+
+const AuthStack = createNativeStackNavigator();
+
+function AuthenStack(){
+  return(
+    <AuthStack.Navigator screenOptions={{
+      headerShown: false,
+    }}>
+      <AuthStack.Screen name={'Open'} component={Open}/>
+      <AuthStack.Screen name={'Login'} component={Login}/>
+      <AuthStack.Screen name={'Reset'} component={Reset}/>
+      <AuthStack.Screen name={'SignUp'} component={SignUp}/>
+      <AuthStack.Screen name={'Confirm'} component={Confirm}/>
+    </AuthStack.Navigator>
   );
 }
 

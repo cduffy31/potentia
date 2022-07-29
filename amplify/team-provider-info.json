@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-potentia-dev-00813-authRole",
+      "UnauthRoleArn": "arn:aws:iam::328226151075:role/amplify-potentia-dev-00813-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::328226151075:role/amplify-potentia-dev-00813-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-potentia-dev-00813-deployment",
+      "UnauthRoleName": "amplify-potentia-dev-00813-unauthRole",
+      "StackName": "amplify-potentia-dev-00813",
+      "StackId": "arn:aws:cloudformation:eu-west-2:328226151075:stack/amplify-potentia-dev-00813/8e6b5980-dc7f-11ec-9da4-069507c0bca4",
+      "AmplifyAppId": "d11d2o7z5ao6y7"
+    },
+    "categories": {
+      "auth": {
+        "potentia628ba546": {}
+      }
+    }
+  }
+}

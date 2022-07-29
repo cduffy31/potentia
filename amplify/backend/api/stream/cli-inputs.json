@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "stream",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "/Users/callanduffy/login/amplify/backend/api/stream/schema.graphql",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authpotentia628ba546"
+    }
+  }
+}
