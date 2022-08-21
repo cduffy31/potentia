@@ -10,6 +10,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { ColorSchemeName, Pressable, Alert,Image } from 'react-native';
 import {Auth, Hub} from 'aws-amplify';
+import Icon from '../assets/icons/Icon';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -113,7 +114,7 @@ function Title(){
      <BottomTab.Navigator
        initialRouteName="Home"
        screenOptions={{
-         tabBarActiveTintColor: Colors[colorScheme].tint,
+         tabBarActiveTintColor: '#2C96BF',
          headerStyle:{
             backgroundColor:'#F5F5F5',
             shadowOffset: { height: 0, width: 0 },
@@ -122,13 +123,17 @@ function Title(){
        <BottomTab.Screen
          name="Home"
          component={Home}
-         options={{ headerTitle: (props) => <Title {...props} />}}
+         options={{ 
+          headerTitle: (props) => <Title {...props} />,
+          tabBarIcon: ({color, size}) => <Icon name='home' size={size+5} color={color}/>
+        }}
        />
        <BottomTab.Screen
          name="Library"
          component={Library}
          options={{
            title: 'Library',
+           tabBarIcon: ({color, size}) => <Icon name='local_library' size={size+5} color={color}/>
          }}
        />
         <BottomTab.Screen
@@ -140,6 +145,7 @@ function Title(){
             backgroundColor:'#FEFEFE',
             shadowOffset: { height: 0, width: 0 },
            },
+           tabBarIcon: ({color, size}) => <Icon name='music_note' size={size+5} color={color}/>
          }}
        />
         <BottomTab.Screen
@@ -147,6 +153,7 @@ function Title(){
          component={Notes}
          options={{
            title: 'Notes',
+           tabBarIcon: ({color, size}) => <Icon name='notes' size={size+5} color={color}/>
          }}
        />
         <BottomTab.Screen
@@ -154,6 +161,7 @@ function Title(){
          component={Profile}
          options={{
            title: 'Profile',
+           tabBarIcon: ({color, size}) => <Icon name='person' size={size+5} color={color}/>
          }}
        /> 
      </BottomTab.Navigator>

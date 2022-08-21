@@ -29,13 +29,13 @@ const Library = ({navigation}) => {
     return (
         <View style={styles.main}>
             <ScrollView style={{width:'90%'}}>
-                <PlayCard date={'22/12/1999'} length={23} title={"imposter Syndrome"} played={6} />
-                <PlayCard date={'22/12/1999'} length={23} title={"imposter Syndrome"} played={6} />
-                <PlayCard date={'22/12/1999'} length={23} title={"imposter Syndrome"} played={6} />
-                <PlayCard date={'22/12/1999'} length={23} title={"imposter Syndrome"} played={6} />
-                <PlayCard date={'22/12/1999'} length={23} title={"imposter Syndrome"} played={6} />
-                <PlayCard date={'22/12/1999'} length={23} title={"imposter Syndrome"} played={6} />
-                <PlayCard date={'22/12/1999'} length={23} title={"imposter Syndrome"} played={6} />
+                <PlayCard date={'31 March, 2022'} length={23} title={"imposter Syndrome"} played={6} />
+                <PlayCard date={'31 March, 2022'} length={23} title={"imposter Syndrome"} played={6} />
+                <PlayCard date={'31 March, 2022'} length={23} title={"imposter Syndrome"} played={6} />
+                <PlayCard date={'31 March, 2022'} length={23} title={"imposter Syndrome"} played={6} />
+                <PlayCard date={'31 March, 2022'} length={23} title={"imposter Syndrome"} played={6} />
+                <PlayCard date={'31 March, 2022'} length={23} title={"imposter Syndrome"} played={6} />
+                <PlayCard date={'31 March, 2022'} length={23} title={"imposter Syndrome"} played={6} />
 
             </ScrollView>
         </View>

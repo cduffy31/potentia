@@ -21,6 +21,7 @@ import {
     Line,
     MsgBox,
 } from '../components/styles.js';
+import Icon from '../assets/icons/Icon.js';
 
 const {brand, darkLight} = Colors;
 
@@ -46,6 +47,7 @@ const Home  = ({navigation}) => {
             </View>
             <View style={{ flexDirection: 'row', width:'90%', justifyContent:'space-between'}}>
                 <View style={[styles.shadowSub, {width:'47.5%'}]}>
+                        <Icon name='Frame-885' color="#61BFBD" size={20} style={styles.icon}/>
                     <Text style={{padding: 6, justifyContent: 'center', fontSize: 28, fontWeight:'bold'}}>
                         5
                     </Text>
@@ -54,6 +56,7 @@ const Home  = ({navigation}) => {
                     </Text>
                 </View>
                 <View style={[styles.shadowSub, {width:'47.5%'}]}>
+                    <Icon name='Frame-886' color="#61BFBD" size={20} style={styles.icon}/>
                     <Text  style={{padding: 6, justifyContent: 'center', fontSize: 28, fontWeight:'bold'}}>
                         5
                     </Text>
@@ -64,6 +67,7 @@ const Home  = ({navigation}) => {
        
             </View >
             <View style={[styles.shadow,{ flexDirection: 'row', width:'90%', padding:10,alignItems:'center', justifyContent:'center'}]}>
+                <Icon name="trending_up" color="#61BFBD" size={20} />
                     <Text > 16 Days </Text>
                     <Text> / last 31 days</Text>
             </View>
@@ -81,13 +85,7 @@ const styles = StyleSheet.create({
     },    
     shadow: {
         backgroundColor:'#ffffff',
-        shadowColor: '#7F5DF0',
-        shadowOffset: {
-            width: 0,
-            height: 4,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.5,
+
         elevation: 5,
         flexDirection:'row',
         padding: 5, 
@@ -97,13 +95,6 @@ const styles = StyleSheet.create({
     },
     shadowSub: {
         backgroundColor:'#ffffff',
-        shadowColor: '#7F5DF0',
-        shadowOffset: {
-            width: 0,
-            height: 4,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.5,
         elevation: 5,
         padding:5, 
         borderRadius: 10,
@@ -112,16 +103,19 @@ const styles = StyleSheet.create({
     },
     calendarShadow:{
         backgroundColor:'#ffffff',
-        shadowColor: '#7F5DF0',
-        shadowOffset: {
-            width: 0,
-            height: 4,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.5,
+
         elevation: 5,
         borderRadius: 10,
         width:'90%'
+    },
+    icon:{
+        alignSelf:'flex-end',
+        marginTop:5,
+        marginLeft:5,
+        right:5,
+        top:5,
+        position:'absolute',
+        ...StyleSheet.absoluteFillObject,
     }
 })
 

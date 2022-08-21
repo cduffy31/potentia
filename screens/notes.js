@@ -42,7 +42,7 @@ const Notes = ({navigation}) => {
                     notes.map(
                         (note,index) =>(
                         <View key={index} style={styles.note}>
-                            <View style={{flex:4}}>
+                            <View style={{flex:4, paddingTop:10}}>
                             <Text style={{marginBottom:9, color:'#7A7A7A'}}>
                                 31 march 2022
                             </Text>

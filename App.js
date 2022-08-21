@@ -1,9 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+/*import TrackPlayer from 'react-native-track-player';*/
 
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation/navigation';
+import { useEffect } from 'react';
 
 import * as Font from 'expo-font';
 
@@ -14,9 +16,18 @@ Amplify.configure(awsconfig)
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
+  //TrackPlayer.registerPlaybackService();
+  useEffect(()=>{
+    fontLoad()
 
-  fontLoad = async () => Promise.all([
-    Font.loadAsync({
+}, [])
+
+ /* const playerLoad = async () =>{
+    TrackPlayer.registerPlaybackService(() => require('./service.js')
+    );
+  }*/
+  const fontLoad = async () => Promise.all([
+    await Font.loadAsync({
       'custom-icons':require('./assets/icons/icomoon.ttf')
   })    
   ]);

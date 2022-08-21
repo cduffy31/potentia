@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import  React, { useEffect, useState} from 'react';
 import {Image, View, Text, StyleSheet} from 'react-native';
 import {Auth} from 'aws-amplify';
 import {Audio} from 'expo-av';
@@ -22,6 +22,7 @@ import {
     Line,
     MsgBox,
 } from '../components/styles.js';
+import Icon from '../assets/icons/Icon';
 
 const {brand, darkLight} = Colors;
 
@@ -33,21 +34,21 @@ const tape ={
 }
 
 const Play = () => {
-    {/*const [sound, setSound] = useState(null);
-    const didMount = async () =>{
-        Audio.setAudioModeAsync({});
-        const sound = new Audio.Sound();
-        setSound(sound);
-        const status = {
-            shouldPlay:false
-        }
-        sound.loadAsync(require('../assets/audio/sample.mp3'), status, false);
-    }
+    const [sound, setSound] = useState();
 
-    const playSound = () =>{
-        didMount();
+    async function playSound(){
+        const { sound } = await Audio.Sound.createAsync(
+            require('../assets/audio/sample.mp3')
+        );
+        setSound(sound);
         await sound.playAsync();
-    }*/}
+    }
+    useEffect(() => {
+        return sound
+            ? () => {
+                sound.unloadAsync(); }
+            : undefined;
+    });
 
     return (
         <View style={{flex:1,
@@ -58,10 +59,8 @@ const Play = () => {
             backgroundColor:'#FEFEFE'}}>
             <Image source={require('../assets/images/icon1.png')} style={{flex:3, alignSelf:'center',height:200, width:200}} resizeMode="contain"/>
             <View style={{flex:1}}>
-            <StyledButton  >
-                <ButtonText>
-                    Play
-                </ButtonText>
+            <StyledButton resizeMode='contain' style={{alignItems:'center', justifyContent:'space-between'}} onPress={playSound}>
+                <Icon name="Arrow---Right-2" color='#F5F5F4' size={40} style={{alignSelf:'center'}}/>
             </StyledButton>
             </View>
         </View>
