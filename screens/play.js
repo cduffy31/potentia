@@ -1,6 +1,6 @@
 import  React, { useEffect, useState} from 'react';
-import {Image, View, Text, StyleSheet} from 'react-native';
-import {Auth} from 'aws-amplify';
+import {Image, View, Text, StyleSheet, Alert} from 'react-native';
+import {Auth, sectionBody} from 'aws-amplify';
 import {Audio} from 'expo-av';
 import { RootTabScreenProps } from '../types';
 
@@ -26,19 +26,19 @@ import Icon from '../assets/icons/Icon';
 
 const {brand, darkLight} = Colors;
 
-const tape ={
-    id:1,
-    title:'help yourself',
-    uri:'../assets/audio/sample.mp3',
-
-}
-
 const Play = () => {
+
     const [sound, setSound] = useState();
+    const [playing, setPlaying] = useState(false);
+
+    const onPlaybackStatusUpdate = (status) =>{
+        console.log(status);
+        setPlaying(status.isPlaying);
+    }
 
     async function playSound(){
         const { sound } = await Audio.Sound.createAsync(
-            require('../assets/audio/sample.mp3')
+            require('../assets/audio/sample.mp3'),
         );
         setSound(sound);
         await sound.playAsync();
@@ -49,6 +49,20 @@ const Play = () => {
                 sound.unloadAsync(); }
             : undefined;
     });
+    const onPlayPausePress = async () =>{
+        if(!sound){
+            playSound
+        }
+        if(playing){
+            await sound.stopAsync();
+        }else{
+            await sound.playAsync();
+        }
+    }
+
+    const _loadSound = () => {
+        
+    }
 
     return (
         <View style={{flex:1,
@@ -57,10 +71,10 @@ const Play = () => {
             justifyContent:'center',
             flexDirection:'column',
             backgroundColor:'#FEFEFE'}}>
-            <Image source={require('../assets/images/icon1.png')} style={{flex:3, alignSelf:'center',height:200, width:200}} resizeMode="contain"/>
+            <Image source={require('../assets/images/icon1.png')} style={{flex:3, alignSelf:'center',height:300, width:300}} resizeMode="contain"/>
             <View style={{flex:1}}>
             <StyledButton resizeMode='contain' style={{alignItems:'center', justifyContent:'space-between'}} onPress={playSound}>
-                <Icon name="Arrow---Right-2" color='#F5F5F4' size={40} style={{alignSelf:'center'}}/>
+                <Icon name={playing ? 'pause' : "Arrow---Right-2"} color='#F5F5F4' size={40} style={{justifyContent:'center'}}/>
             </StyledButton>
             </View>
         </View>
