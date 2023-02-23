@@ -1,0 +1,10 @@
+{
+  "resourceName": "s3potentiastorage8bacbe6f",
+  "bucketName": "potentia-storage-8bacbe6f",
+  "policyUUID": "a08577dc",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "READ"
+  ]
+}
