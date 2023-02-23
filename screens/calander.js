@@ -47,7 +47,7 @@ const Home  = ({navigation}) => {
             </View>
             <View style={{ flexDirection: 'row', width:'90%', justifyContent:'space-between'}}>
                 <View style={[styles.shadowSub, {width:'47.5%'}]}>
-                        <Icon name='Frame-885' color="#61BFBD" size={20} style={styles.icon}/>
+                    <Icon name='Frame-885' color="#61BFBD" size={20} style={styles.icon}/>
                     <Text style={{padding: 6, justifyContent: 'center', fontSize: 28, fontWeight:'bold'}}>
                         5
                     </Text>

@@ -1,7 +1,8 @@
 import React from 'react';
 import {Image, View, Text, StyleSheet, ScrollView} from 'react-native';
-import {Auth} from 'aws-amplify';
+import {Auth, Storage} from 'aws-amplify';
 import PlayCard from '../components/PlayCard.js';
+
 
 import {
     StyledContainer,
@@ -30,13 +31,6 @@ const Library = ({navigation}) => {
         <View style={styles.main}>
             <ScrollView style={{width:'90%'}}>
                 <PlayCard date={'31 March, 2022'} length={23} title={"imposter Syndrome"} played={6} />
-                <PlayCard date={'31 March, 2022'} length={23} title={"imposter Syndrome"} played={6} />
-                <PlayCard date={'31 March, 2022'} length={23} title={"imposter Syndrome"} played={6} />
-                <PlayCard date={'31 March, 2022'} length={23} title={"imposter Syndrome"} played={6} />
-                <PlayCard date={'31 March, 2022'} length={23} title={"imposter Syndrome"} played={6} />
-                <PlayCard date={'31 March, 2022'} length={23} title={"imposter Syndrome"} played={6} />
-                <PlayCard date={'31 March, 2022'} length={23} title={"imposter Syndrome"} played={6} />
-
             </ScrollView>
         </View>
 
