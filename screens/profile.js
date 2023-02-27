@@ -25,6 +25,9 @@ import {
 const {brand, darkLight} = Colors;
 
 const Profile = ({navigation}) => {
+    const signOut = () => {
+        Auth.signOut();
+    }
     return (
         <View style={styles.page}>
             <View style={[styles.page, {width:'100%'}]}>
@@ -75,7 +78,7 @@ const Profile = ({navigation}) => {
                     </View>
                 </View>
             </View>
-            <StyledButton style={styles.logout}>
+            <StyledButton style={styles.logout} onPress={signOut}>
                 <ButtonText>
                     Log Out
                 </ButtonText>
