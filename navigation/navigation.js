@@ -7,17 +7,12 @@ import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
 import { ColorSchemeName, Pressable, Alert,Image } from 'react-native';
 import {Auth, Hub} from 'aws-amplify';
 import Icon from '../assets/icons/Icon';
 
-import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import ModalScreen from '../screens/ModalScreen';
-import NotFoundScreen from '../screens/NotFoundScreen';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import Open from '../screens/open';
@@ -33,44 +28,48 @@ import Play from '../screens/play';
 import Library from '../screens/Library';
  
 
- export default function Navigation({ colorScheme}) {
-    const [isLoggedIn, setIsLoggedIn] = React.useState(undefined);
-    const checkUser = async () =>{
-        try {
-          const auth = await Auth.currentAuthenticatedUser({bypassCache: true});
-          setIsLoggedIn(auth);
-      } catch(e) {
-          setIsLoggedIn(null);
+export default function Navigation({ colorScheme}) {
+  const [user, setUser] = useState(undefined);
+  const [loading, setLoading] = useState(false);
+
+  const checkUser = async () => {
+    try{
+      const authUser = await Auth.currentAuthenticatedUser({bypassCache:true});
+      setUser(authUser);
+    }catch(e){
+      setUser(undefined);
+    }
+    
+  }
+
+  useEffect(() => {
+    checkUser();
+  }, [])
+
+  useEffect(() => {
+    const listener = (data) => {
+      if(data.payload.event == 'signIn' || data.payload.event == 'signOut'){
+        checkUser();
       }
     }
-    React.useEffect(() =>{
-        const listener = () =>{
-            checkUser();
-        }
+    Hub.listen('auth', listener);
+    return () => Hub.remove('auth');
+  }, [])
 
-    },[]);
-    React.useEffect(() =>{
-      const listener = (data) =>{
-        setIsLoggedIn(undefined);
+  return (
+    <NavigationContainer
+      linking={LinkingConfiguration}
+      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      {
+        user == null  ?(
+          <AuthenStack/>
+        ):(
+          <BottomTabNavigator />   
+        )
       }
-      Hub.listen('auth', listener);
-      return () => Hub.remove('auth', listener);
-    },[]);
-
-    return (
-      <NavigationContainer
-        linking={LinkingConfiguration}
-        theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        {
-          isLoggedIn == null  ?(
-            <BottomTabNavigator/>
-          ):(
-            <AuthenStack />   
-          )
-        }
-      </NavigationContainer>
-    );
-  }
+    </NavigationContainer>
+  );
+}
 
 function Title(){
     return(
