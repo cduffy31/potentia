@@ -22,6 +22,8 @@ import {
     MsgBox,
 } from '../components/styles.js';
 
+import Icon from '../assets/icons/Icon';
+
 
 const {brand, darkLight} = Colors;
 
@@ -32,6 +34,15 @@ const Notes = ({navigation}) => {
         'imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome ',
         'helloWorld',
     ]);
+
+    const noteCheck = (string) => {
+        if(string.length < 20){
+            return string;
+        }else{
+            return string.substring(0,16)+" ..."
+        }
+    }
+
     return (
         <View style={{flex:1}}>
             <ScrollView style={styles.contain} 
@@ -42,18 +53,18 @@ const Notes = ({navigation}) => {
                     notes.map(
                         (note,index) =>(
                         <View key={index} style={styles.note}>
-                            <View style={{flex:4, paddingTop:10}}>
+                            <View style={{flex:7, paddingTop:10}}>
                             <Text style={{marginBottom:9, color:'#7A7A7A'}}>
                                 31 march 2022
                             </Text>
                             <Text numberOfLines={1}>
-                                {note}
+                                {
+                                    noteCheck(note)
+                                }
                             </Text>
                             </View>
-                            <View style={{flex:1}}>
-                                <StyledButton style={{height:30}}>
-
-                                </StyledButton>
+                            <View style={{flex:1, justifyContent:'center'}}>
+                                <Icon name="eye" color="#2C96BF"  size={30}/>
                             </View>
                         </View>
                         )
@@ -91,13 +102,7 @@ const styles = StyleSheet.create({
         padding:10,
         marginBottom:15,
         width:'90%',
-        shadowColor: '#7F5DF0',
-        shadowOffset: {
-            width: 0,
-            height: 4,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.5,
+
         elevation: 5,
         padding:5, 
         borderRadius: 10,
