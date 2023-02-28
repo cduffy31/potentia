@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {Image, View, Text, StyleSheet, ScrollView, Modal} from 'react-native';
+import {Image, Button, View, Text, StyleSheet, ScrollView, TouchableOpacity,Modal} from 'react-native';
 import {Auth} from 'aws-amplify';
 import NewNote from './NewNote.js';
-
+import { LinearGradient } from 'expo-linear-gradient';
 import {
     StyledContainer,
     InnerContainer,
@@ -25,7 +25,6 @@ import {
 import Icon from '../assets/icons/Icon';
 
 
-const {brand, darkLight} = Colors;
 
 const Notes = ({navigation}) => {
     const [modal, setModal] = useState(false);
@@ -43,6 +42,14 @@ const Notes = ({navigation}) => {
         }
     }
 
+    const oldNote = (noteDetails) =>{
+
+    }
+
+    const newNote = () => {
+
+    }
+
     return (
         <View style={{flex:1}}>
             <ScrollView style={styles.contain} 
@@ -53,32 +60,39 @@ const Notes = ({navigation}) => {
                     notes.map(
                         (note,index) =>(
                         <View key={index} style={styles.note}>
-                            <View style={{flex:7, paddingTop:10}}>
+                            <View style={{flex:7, paddingTop:15, paddingLeft:10}}>
                             <Text style={{marginBottom:9, color:'#7A7A7A'}}>
                                 31 march 2022
                             </Text>
-                            <Text numberOfLines={1}>
+                            <Text numberOfLines={1} style={{marginBottom:10}}>
                                 {
                                     noteCheck(note)
                                 }
                             </Text>
                             </View>
                             <View style={{flex:1, justifyContent:'center'}}>
-                                <Icon name="eye" color="#2C96BF"  size={30}/>
+                                <TouchableOpacity onPress={oldNote}>
+                                    <Icon name="eye" color="#2C96BF"  size={30}/>
+                                </TouchableOpacity>
                             </View>
                         </View>
                         )
                     )
                 }
             </ScrollView>
-            <View style={{justifyContent:'center', alignItems:'center'}}>
-                <StyledButton style={styles.button}>
-                    <ButtonText>
-                        +   Add note
-                    </ButtonText>
-                </StyledButton>
-            </View>
+            <TouchableOpacity onPress={newNote}>
+                <View style={{justifyContent:'center', alignItems:'center', backgroundColor:'#F5F5F5', marginBottom:15}}>
+                    <LinearGradient colors={['#2C96BF','#54B4B2']} style={styles.button} >
+                        <Text style={{fontSize:30, paddingRight:10, color:"#FFFFFF"} }>
+                            +   
+                        </Text>
 
+                        <Text style={{paddingTop:5, color:"#FFFFFF"}}>
+                            New Note
+                        </Text>
+                    </LinearGradient>
+                </View>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -92,9 +106,12 @@ const styles = StyleSheet.create({
         //alignItems:'center',
     },
     button:{
-        width:'90%',
+        padding: 15,
+        width:'50%',
+        alignItems: 'center',
         justifyContent:'center',
-        alignItems:'center',
+        borderRadius: 5,
+        flexDirection:'row'
     },
     note:{
         backgroundColor:'#ffffff',
@@ -102,11 +119,15 @@ const styles = StyleSheet.create({
         padding:10,
         marginBottom:15,
         width:'90%',
-
         elevation: 5,
         padding:5, 
         borderRadius: 10,
         flexDirection:'row',
+    },
+    text:{
+       // backgroundColor: 'transparent',
+        fontSize: 15,
+        color: '#fff',
     }
 })
 
