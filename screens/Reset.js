@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
-
 import { StatusBar } from 'expo-status-bar';
 import {Formik} from 'formik';
 import {View, StyleSheet, Alert, Text} from 'react-native'
-import {Octicons, Ionicons} from '@expo/vector-icons';
 import {Auth} from 'aws-amplify';
 
 import {
@@ -41,13 +39,13 @@ const Reset = ({navigation}) => {
                 <StyledFormArea style={{justifyContent:"space-between"}}>
                     <Formik 
                         initialValues={{email:''}}
-                        onSubmit={values =>{
-                                try{
-                                    const response = Auth.forgotPassword(values.email);
+                        onSubmit={async(values) =>{
+                                try{ 
+                                    const response = await Auth.forgotPassword(values.email);
                                     console.log(response);
                                     navigation.navigate('Confirm');
                                 }catch(e){
-                                    Alert.alert("Doesnt work");
+                                    Alert.alert(e.message);
                                 }
                             }
                         }

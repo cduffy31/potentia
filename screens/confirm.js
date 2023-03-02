@@ -62,8 +62,8 @@ const Confirm = ({navigation}) =>{
                                     label="Email"
                                     placeholder="Email"
                                     placeholderTextColor={darkLight}
-                                    onChangeText={handleChange('code')}
-                                    onBlur={handleBlur('code')}
+                                    onChangeText={handleChange('email')}
+                                    onBlur={handleBlur('email')}
                                     value={values.email}
                                 />
                                 <StyledTextInput 

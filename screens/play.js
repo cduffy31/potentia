@@ -29,40 +29,33 @@ const {brand, darkLight} = Colors;
 const Play = () => {
 
     const [sound, setSound] = useState();
-    const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(false);
 
-    const onPlaybackStatusUpdate = (status) =>{
-        console.log(status);
-        setPlaying(status.isPlaying);
+  async function playSound() {
+    if(sound == undefined){
+      const { sound } = await Audio.Sound.createAsync( require('../assets/audio/sample.mp3')
+      );
+      setSound(sound);
+      await sound.playAsync();
+      setPlaying(true)
+    }else if(playing == true){
+      setPlaying(false)
+      await sound.pauseAsync();
+      
+    }else if(playing == false){
+      setPlaying(true)
+      await sound.playAsync();
     }
+  }
 
-    async function playSound(){
-        const { sound } = await Audio.Sound.createAsync(
-            require('../assets/audio/sample.mp3'),
-        );
-        setSound(sound);
-        await sound.playAsync();
-    }
-    useEffect(() => {
-        return sound
-            ? () => {
-                sound.unloadAsync(); }
-            : undefined;
-    });
-    const onPlayPausePress = async () =>{
-        if(!sound){
-            playSound
+  /*useEffect( async() => {
+    return sound
+      ? async () => {
+            await sound.unloadAsync();
         }
-        if(playing){
-            await sound.stopAsync();
-        }else{
-            await sound.playAsync();
-        }
-    }
+      : undefined;
+  }, [sound]);*/
 
-    const _loadSound = () => {
-        
-    }
 
     return (
         <View style={{flex:1,
@@ -73,12 +66,29 @@ const Play = () => {
             backgroundColor:'#FEFEFE'}}>
             <Image source={require('../assets/images/icon1.png')} style={{flex:3, alignSelf:'center',height:300, width:300}} resizeMode="contain"/>
             <View style={{flex:1}}>
-            <StyledButton resizeMode='contain' style={{alignItems:'center', justifyContent:'space-between'}} onPress={playSound}>
-                <Icon name={playing ? 'pause' : "Arrow---Right-2"} color='#F5F5F4' size={40} style={{justifyContent:'center'}}/>
+            <StyledButton resizeMode='contain' style={style.styled} onPress={playSound}>
+                <Icon name={playing ? 'pause' : "Arrow---Right-2"} color='#F5F5F4' size={40} />
             </StyledButton>
             </View>
         </View>
     );
 }
+
+const style = StyleSheet.create({
+    button:{
+        justifyContent:'center',
+        paddingBottom:10
+    },
+    styled:{
+        alignItems:'center', 
+        backgroundColor:'#2C96BF',
+        height:75,
+        width:75, 
+        flexDirection:'column',
+        borderRadius:10,
+        justifyContent:'center'
+    }
+});
+
 
 export default Play;
