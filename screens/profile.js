@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, View, Text, StyleSheet, Button} from 'react-native';
+import {Image, View, Text, StyleSheet, Button, TouchableOpacity} from 'react-native';
 import {Auth} from 'aws-amplify';
 import Icon from '../assets/icons/Icon';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -41,7 +41,7 @@ const Profile = ({navigation}) => {
                             </Text>
                         </View>
                         <View>
-                            <Icon name="chevron arrow right" size={40} color="#000000" />
+                            <Icon name="Arrow---Right-2" size={40} color="#000000" />
                         </View>
                     </View>
                     <View style={[styles.button,{flexDirection:'row', justifyContent:'space-between'}]}>
@@ -79,11 +79,13 @@ const Profile = ({navigation}) => {
                     </View>
                 </View>
             </View>
-            <StyledButton style={styles.logout} onPress={signOut}>
-                <ButtonText>
-                    Log Out
-                </ButtonText>
-            </StyledButton>
+            <TouchableOpacity style={styles.logout} onPress={signOut}>
+                <LinearGradient colors={['#2C96BF','#54B4B2']} style={styles.logout}>
+                    <ButtonText>
+                        Log Out
+                    </ButtonText>
+                </LinearGradient>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -92,7 +94,10 @@ const styles = StyleSheet.create({
     logout:{
         width:'90%',
         alignItems:'center',
+        paddingTop:15,
+        paddingBottom:15,
         justifyContent:'center',
+        borderRadius:10,
     },
     button:{
         backgroundColor:'#ffffff',

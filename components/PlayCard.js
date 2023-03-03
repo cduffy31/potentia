@@ -1,6 +1,7 @@
 import React from 'react';
 import {Text,View,StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from '../assets/icons/Icon';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const PlayCard = (props) => {
     return (
@@ -33,8 +34,12 @@ const PlayCard = (props) => {
                     </Text>
                 </View>
             </View>
-            <View style={styles.icon}>
-                <Icon name='Arrow---Right-2' color ='#F5F5F4' size={30}/>
+            <View>
+                <TouchableOpacity>
+                    <LinearGradient colors={['#2C96BF','#54B4B2']} style={styles.icon}>
+                         <Icon name='Arrow---Right-2' color ='#F5F5F4' size={30}/>
+                    </LinearGradient>
+                </TouchableOpacity>
             </View>
         </View>
     )

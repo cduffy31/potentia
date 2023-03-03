@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 
 import { StatusBar } from 'expo-status-bar';
 import {Formik} from 'formik';
-import {View, StyleSheet, Alert} from 'react-native'
+import {View, StyleSheet, Alert, TouchableOpacity} from 'react-native'
 import {Octicons, Ionicons} from '@expo/vector-icons';
 import {Auth} from 'aws-amplify';
-
+import { LinearGradient } from 'expo-linear-gradient';
 import {
     StyledContainer,
     InnerContainer,
@@ -52,7 +52,7 @@ const Confirm = ({navigation}) =>{
                         {({handleChange, handleBlur, handleSubmit, values}) => (<StyledFormArea style={{justifyContent:"space-between"}}>
                                 <StyledTextInput 
                                     label="Code"
-                                    placeholder="Enter code"
+                                    placeholder="Enter your code"
                                     placeholderTextColor={darkLight}
                                     onChangeText={handleChange('code')}
                                     onBlur={handleBlur('code')}
@@ -60,7 +60,7 @@ const Confirm = ({navigation}) =>{
                                 />
                                 <StyledTextInput 
                                     label="Email"
-                                    placeholder="Email"
+                                    placeholder="Enter your email"
                                     placeholderTextColor={darkLight}
                                     onChangeText={handleChange('email')}
                                     onBlur={handleBlur('email')}
@@ -86,11 +86,13 @@ const Confirm = ({navigation}) =>{
                                     isPassword={true}
                                     setHidePassword={setHidePassword}
                                 />
-                            <StyledButton onPress={handleSubmit} style={{justifyContent:'center', alignItmes:'center'}}>
-                                <ButtonText style={style.button}>
-                                    Next
-                                </ButtonText>
-                            </StyledButton>
+                            <TouchableOpacity onPress={handleSubmit} style={{justifyContent:'center', alignItmes:'center'}}>
+                                <LinearGradient colors={['#2C96BF','#54B4B2']} style={{paddingBottom:15, paddingTop:15, borderRadius:10}}>
+                                    <ButtonText style={style.button}>
+                                        Next
+                                    </ButtonText>
+                                </LinearGradient>
+                            </TouchableOpacity>
                         </StyledFormArea>)}
                     </Formik>
                     <RegText style={style.reg} onPress={() => navigation.navigate('Login')}>Already have an account?</RegText>
@@ -117,3 +119,13 @@ const style = StyleSheet.create({
 });
 
 export default Confirm;
+
+/*
+                        <TouchableOpacity onPress={handleSubmit} style={{justifyContent:'center', alignItmes:'center'}}>
+                            <LinearGradient colors={['#2C96BF','#54B4B2']} style={{paddingBottom:15, paddingTop:15, borderRadius:10}}>          
+                                <ButtonText style={style.button}> 
+                                    Sign Up
+                                </ButtonText>
+                            </LinearGradient>
+                        </TouchableOpacity>
+*/

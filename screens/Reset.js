@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {Formik} from 'formik';
-import {View, StyleSheet, Alert, Text} from 'react-native'
+import {View, StyleSheet, Alert, Text, TouchableOpacity} from 'react-native'
 import {Auth} from 'aws-amplify';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import {
     StyledContainer,
@@ -65,11 +66,13 @@ const Reset = ({navigation}) => {
                                 We will send you an email with a code to reset
                             </Text>
                         </View>
-                        <StyledButton onPress={handleSubmit}>
-                            <ButtonText style={style.button}>
-                                Next
-                            </ButtonText>
-                        </StyledButton>
+                        <TouchableOpacity onPress={handleSubmit} style={{justifyContent:'center', alignItmes:'center'}}>
+                                <LinearGradient colors={['#2C96BF','#54B4B2']} style={{paddingBottom:15, paddingTop:15, borderRadius:10}}>
+                                    <ButtonText style={style.button}>
+                                        Sign In
+                                    </ButtonText>
+                                </LinearGradient>
+                            </TouchableOpacity>
                     </StyledFormArea>)}
                     </Formik>
                 </StyledFormArea>

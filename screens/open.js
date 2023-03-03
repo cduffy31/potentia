@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 
 import { StatusBar } from 'expo-status-bar';
-import {View, Text, StyleSheet, Alert, Image} from 'react-native'
+import {View, Text, StyleSheet, Alert, Image, TouchableOpacity} from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient';
 import {
     StyledContainer,
     InnerContainer,
@@ -44,11 +45,13 @@ const Open = ({navigation}) =>{
                                 resizeMode="contain"/>
                         </View>
                     </View>
-                    <StyledButton onPress={() => navigation.push('Login')} style={{ alignSelf:'stretch'}}>
-                            <ButtonText style={style.button}>
-                                Sign In
-                            </ButtonText>
-                        </StyledButton>
+                        <TouchableOpacity onPress={() => navigation.push('Login')} style={{ alignSelf:'stretch'}}>
+                            <LinearGradient colors={['#2C96BF','#54B4B2']} style={{paddingBottom:15, paddingTop:15, borderRadius:10}}>
+                                <ButtonText style={style.button}>
+                                    Sign In
+                                </ButtonText>
+                            </LinearGradient>
+                        </TouchableOpacity>
             </InnerContainer>
         </OuterContainer>
     );

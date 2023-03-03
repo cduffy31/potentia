@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 
 import { StatusBar } from 'expo-status-bar';
 import {Formik} from 'formik';
-import {View, StyleSheet, Alert} from 'react-native'
+import {View, StyleSheet, Alert, TouchableOpacity} from 'react-native'
 import {Octicons, Ionicons} from '@expo/vector-icons';
 import {Auth} from 'aws-amplify';
-
+import { LinearGradient } from 'expo-linear-gradient';
 import {
     StyledContainer,
     InnerContainer,
@@ -85,11 +85,13 @@ const Login = ({navigation}) => {
                                 />
                             {/*<MsgBox>...</MsgBox>*/}
                             <SubTitle onPress={() => navigation.navigate('Reset')}>Forgot password?</SubTitle>
-                            <StyledButton onPress={handleSubmit} style={{justifyContent:'center', alignItmes:'center'}}>
-                                <ButtonText style={style.button}>
-                                    Sign In
-                                </ButtonText>
-                            </StyledButton>
+                            <TouchableOpacity onPress={handleSubmit} style={{justifyContent:'center', alignItmes:'center'}}>
+                                <LinearGradient colors={['#2C96BF','#54B4B2']} style={{paddingBottom:15, paddingTop:15, borderRadius:10}}>
+                                    <ButtonText style={style.button}>
+                                        Sign In
+                                    </ButtonText>
+                                </LinearGradient>
+                            </TouchableOpacity>
                         </StyledFormArea>)}
                 </Formik>
             </StyledContainer>
