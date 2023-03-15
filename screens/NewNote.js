@@ -38,6 +38,7 @@ const NewNote = ({navigation}) => {
             }catch(err){
                 Alert.alert(err);
             }
+            setSaved(true);
         }
     }
 
@@ -54,15 +55,27 @@ const NewNote = ({navigation}) => {
                 },
                 {
                     text:'Save',
-                    onPress: () => saveLeave
+                    onPress: () => saveLeave()
                 }
             ])
         }else{
             navigation.navigate('Notes')
         }
     }
-    const saveLeave = () =>{
-        
+    const saveLeave = async () =>{
+        const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+        const d = new Date();
+        let name = month[d.getMonth()];
+        let day = d.getDate();
+        let year = d.getFullYear();
+        try{
+            const newNote = await DataStore.save(new Notes({
+                date:day+" "+name+" "+year,
+                content:value
+            }));
+        }catch(err){
+            Alert.alert(err);
+        }
         navigation.navigate('Notes')
     }
 

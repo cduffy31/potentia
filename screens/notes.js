@@ -74,6 +74,7 @@ const Notes = ({navigation}) => {
             <PageTitle style={{ alignSelf: 'center', fontSize:17, color:'black', fontWeight:'600' }}>
                 Notes
             </PageTitle>
+            <View style={{flex:1}}>
             <ScrollView style={styles.contain} 
                 contentContainerStyle={{ 
                     flexGrow: 1, justifyContent: 'space-start',
@@ -106,19 +107,22 @@ const Notes = ({navigation}) => {
                     )
                 }
             </ScrollView>
-            <TouchableOpacity onPress={() => navigation.navigate('NewNote')}>
-                <View style={{justifyContent:'center', alignItems:'center', backgroundColor:'#F5F5F5', marginBottom:15}}>
+            <View style={{position: 'absolute', bottom:25, right:0, left:0, alignItems:'center'}}>
+            <TouchableOpacity onPress={() => navigation.navigate('NewNote')} style={{width:'50%'}}>
+                <View style={{justifyContent:'center', alignItems:'center', marginBottom:15}}>
                     <LinearGradient colors={['#2C96BF','#54B4B2']} style={styles.button} >
                         <Text style={{fontSize:30, paddingRight:10, color:"#FFFFFF"} }>
                             +   
                         </Text>
 
-                        <Text style={{paddingTop:5, color:"#FFFFFF"}}>
-                            New Note
+                        <Text style={{paddingTop:5, color:"#FFFFFF", fontSize:15, fontWeight:'600'}}>
+                        Add Note
                         </Text>
                     </LinearGradient>
                 </View>
             </TouchableOpacity>
+            </View>
+            </View>
         </View>
     );
 }
@@ -133,10 +137,9 @@ const styles = StyleSheet.create({
     },
     button:{
         padding: 15,
-        width:'50%',
         alignItems: 'center',
         justifyContent:'center',
-        borderRadius: 5,
+        borderRadius: 15,
         flexDirection:'row'
     },
     note:{
