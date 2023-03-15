@@ -1,25 +1,25 @@
 export type AmplifyDependentResourcesAttributes = {
-    "auth": {
-        "potentia628ba546": {
-            "IdentityPoolId": "string",
-            "IdentityPoolName": "string",
-            "UserPoolId": "string",
-            "UserPoolArn": "string",
-            "UserPoolName": "string",
-            "AppClientIDWeb": "string",
-            "AppClientID": "string"
-        }
-    },
-    "storage": {
-        "s3potentiastorage8bacbe6f": {
-            "BucketName": "string",
-            "Region": "string"
-        }
-    },
-    "api": {
-        "stream": {
-            "GraphQLAPIIdOutput": "string",
-            "GraphQLAPIEndpointOutput": "string"
-        }
+  "api": {
+    "notes": {
+      "GraphQLAPIEndpointOutput": "string",
+      "GraphQLAPIIdOutput": "string"
     }
+  },
+  "auth": {
+    "potentia628ba546": {
+      "AppClientID": "string",
+      "AppClientIDWeb": "string",
+      "IdentityPoolId": "string",
+      "IdentityPoolName": "string",
+      "UserPoolArn": "string",
+      "UserPoolId": "string",
+      "UserPoolName": "string"
+    }
+  },
+  "storage": {
+    "s3potentiastorage8bacbe6f": {
+      "BucketName": "string",
+      "Region": "string"
+    }
+  }
 }

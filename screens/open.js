@@ -59,14 +59,14 @@ const Open = ({navigation}) =>{
 const style = StyleSheet.create({
     reg:{
         alignSelf: 'flex-end',
-        fontSize:'17px',
+        fontSize:17,
         color:'#2C96BF',
     },
     button:{
         textAlign: 'center',
     },
     slogan:{
-        fontSize:'17px',
+        fontSize:17,
         color:' #3C3E42',
         paddingTop:20,
     }

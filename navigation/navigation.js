@@ -26,11 +26,16 @@ import Profile from '../screens/profile';
 import Notes from '../screens/notes';
 import Play from '../screens/play';
 import Library from '../screens/Library';
+import NewNote from '../screens/NewNote';
+import OldNote from '../screens/OldNote';
+import { getHeaderTitle } from '@react-navigation/elements';
  
 
 export default function Navigation({ colorScheme}) {
   const [user, setUser] = useState(undefined);
   const [loading, setLoading] = useState(false);
+
+
 
   const checkUser = async () => {
     try{
@@ -148,10 +153,11 @@ function Title(){
          }}
        />
         <BottomTab.Screen
-         name="Notes"
-         component={Notes}
+         name="NotesScreen"
+         component={NotesStack}
          options={{
-           title: 'Notes',
+          title:'Notes',
+          headerShown: false,
            tabBarIcon: ({color, size}) => <Icon name='notes' size={size+5} color={color}/>
          }}
        />
@@ -181,6 +187,19 @@ function Title(){
        <AuthStack.Screen name={'Confirm'} component={Confirm}/>
      </AuthStack.Navigator>
    );
+ }
+
+ const NoteStack = createNativeStackNavigator();
+ function NotesStack(){
+  return(
+    <NoteStack.Navigator screenOptions={{
+      headerShown: false,
+    }}>
+      <NoteStack.Screen name={'Notes'} component={Notes} options={{title: 'Notes'}}/>
+      <NoteStack.Screen name={'NewNote'} component={NewNote} options={{title: 'New Note'}}/>    
+      <NoteStack.Screen name={'OldNote'} component={OldNote} options={{title: 'Old Note'}}/>    
+    </NoteStack.Navigator>
+  );
  }
  
  /**

@@ -20,13 +20,13 @@ const {primary, secondary, tertiary, darkLight, brand, green, red} = Colors;
 export const StyledContainer = styled.View`
     flex:1;
     padding: 20px;
-    padding-top: ${StatusBarHeight + 40};
+    padding-top: ${StatusBarHeight + 40}px;
     background-color: ${primary};
 `;
 export const OuterContainer = styled.View`
     flex:1;
     padding: 20px;
-    padding-top:${StatusBarHeight + 30};
+    padding-top:${StatusBarHeight + 30}px;
     background-color: ${primary}; 
 `
 

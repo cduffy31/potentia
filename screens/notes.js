@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
-import {Image, Button, View, Text, StyleSheet, ScrollView, TouchableOpacity,Modal} from 'react-native';
-import {Auth} from 'aws-amplify';
+import React, {useState, useEffect} from 'react';
+import {Image, Button, View, Text, StyleSheet, ScrollView, TouchableOpacity,Modal, Alert, RefreshControl} from 'react-native';
 import NewNote from './NewNote.js';
 import { LinearGradient } from 'expo-linear-gradient';
+import {API, graphqlOperation, Auth, } from 'aws-amplify';
+import * as queries from '../src/graphql/queries';
 import {
     StyledContainer,
     InnerContainer,
@@ -24,15 +25,16 @@ import {
 
 import Icon from '../assets/icons/Icon';
 
-
-
 const Notes = ({navigation}) => {
     const [modal, setModal] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
     const [notes, setNotes] = useState([
         'imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome ',
         'helloWorld',
     ]);
+
+    const [testNotes, setTests] = useState([]);
 
     const noteCheck = (string) => {
         if(string.length < 20){
@@ -43,35 +45,59 @@ const Notes = ({navigation}) => {
     }
 
     const oldNote = (noteDetails) =>{
-
+        navigation.navigate('OldNote',{id:noteDetails})
     }
 
     const newNote = () => {
-
+        navigation.navigate('NewNote');
     }
 
+    const loadNotes = async () => {   
+        try{     
+            const testNote = await API.graphql(graphqlOperation(queries.listNotes));
+            setTests(testNote.data.listNotes.items);
+        }catch(error){
+            Alert.alert("Unable to load notes")
+        }
+    }
+
+    const onRefresh = () =>{
+        loadNotes();
+    }
+
+    useEffect(() => {
+        loadNotes()
+    }, []);
+
     return (
-        <View style={{flex:1}}>
+        <View style={{flex:1, paddingTop:55, backgroundColor:'#F5F5F5'}}>
+            <PageTitle style={{ alignSelf: 'center', fontSize:17, color:'black', fontWeight:'600' }}>
+                Notes
+            </PageTitle>
             <ScrollView style={styles.contain} 
-            contentContainerStyle={{ 
-                flexGrow: 1, justifyContent: 'space-start',
-                alignItems:'center' }}>
+                contentContainerStyle={{ 
+                    flexGrow: 1, justifyContent: 'space-start',
+                    alignItems:'center' }}
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
+                }
+                >
                 {
-                    notes.map(
-                        (note,index) =>(
-                        <View key={index} style={styles.note}>
+                    testNotes.map(
+                        (note) =>(
+                        <View key={note.id} style={styles.note}>
                             <View style={{flex:7, paddingTop:15, paddingLeft:10}}>
                             <Text style={{marginBottom:9, color:'#7A7A7A'}}>
-                                31 march 2022
+                                {note.date}
                             </Text>
                             <Text numberOfLines={1} style={{marginBottom:10}}>
                                 {
-                                    noteCheck(note)
+                                    noteCheck(note.content)
                                 }
                             </Text>
                             </View>
                             <View style={{flex:1, justifyContent:'center'}}>
-                                <TouchableOpacity onPress={oldNote}>
+                                <TouchableOpacity onPress={() => oldNote(note.id)}>
                                     <Icon name="eye" color="#2C96BF"  size={30}/>
                                 </TouchableOpacity>
                             </View>
@@ -80,7 +106,7 @@ const Notes = ({navigation}) => {
                     )
                 }
             </ScrollView>
-            <TouchableOpacity onPress={newNote}>
+            <TouchableOpacity onPress={() => navigation.navigate('NewNote')}>
                 <View style={{justifyContent:'center', alignItems:'center', backgroundColor:'#F5F5F5', marginBottom:15}}>
                     <LinearGradient colors={['#2C96BF','#54B4B2']} style={styles.button} >
                         <Text style={{fontSize:30, paddingRight:10, color:"#FFFFFF"} }>

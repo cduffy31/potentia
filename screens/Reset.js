@@ -93,17 +93,17 @@ const style = StyleSheet.create({
     },
     reg:{
         alignSelf: 'flex-end',
-        fontSize:'17px',
+        fontSize:17,
         color:'#2C96BF',
     },
     slogan:{
-        fontSize:'17px',
+        fontSize:17,
         color:' #3C3E42',
         paddingTop:20,
         paddingBottom:20,
     },regTest:{
         alignSelf: 'flex-start',
-        fontSize:'17px',
+        fontSize:17,
         color:'#2C96BF',
     }
 });

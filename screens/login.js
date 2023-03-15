@@ -110,11 +110,11 @@ const style = StyleSheet.create({
         textAlign: 'center',
     },    reg:{
         alignSelf: 'flex-end',
-        fontSize:'17px',
+        fontSize:17,
         color:'#2C96BF',
     }, regTest:{
         alignSelf: 'flex-start',
-        fontSize:'17px',
+        fontSize:17,
         color:'#2C96BF',
     }
 });

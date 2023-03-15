@@ -1,50 +1,38 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Image, View, Text, StyleSheet, ScrollView, Modal, TextInput, Alert} from 'react-native';
 import {Auth} from 'aws-amplify';
-import {API, graphqlOperation, DataStore} from 'aws-amplify';
-import {createNotes} from '../src/graphql/mutations';
-import {Notes} from '../src/models'
+import {API, graphqlOperation} from 'aws-amplify';
+import * as queries from '../src/graphql/queries';
+import { Note } from '../src/models';
 
 import {
-
+    StyledContainer,
+    InnerContainer,
+    PageLogo,
+    PageTitle,
+    SubTitle,
+    StyledFormArea,
+    LeftIcon,
+    RightIcon,
+    StyledButton,
+    StyledTextInput,
+    StyledTextLabel,
+    ButtonText,
     RegText,
     Colors,
+    Line,
+    MsgBox,
 } from '../components/styles.js';
 
 const {brand, darkLight} = Colors;
 
-const NewNote = ({navigation}) => {
+const OldNote = ({navigation, route}) => {
     const [value,setText] = useState("");
-    const [saved, setSaved] = useState(false)
-    const [note, setNote] = useState(null);
+    const [saved, setSaved] = useState(false);
+    const {id} = route.params;
+    const [date, setDates] = useState(null);
 
-    const saveNote = async () =>{
-        if (value == ""){
-            Alert.alert("Please write before saving")
-        }else if(saved == true){
-            Alert.alert("Saved");
-        }else{
-            const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-            const d = new Date();
-            let name = month[d.getMonth()];
-            let day = d.getDate();
-            let year = d.getFullYear();
-            try{
-                const newNote = await DataStore.save(new Notes({
-                    date:day+" "+name+" "+year,
-                    content:value
-                }));
-                setNote(newNote);
-            }catch(err){
-                Alert.alert(err);
-            }
-        }
-    }
 
-    const change = (text) =>{
-        setText(text);
-        setSaved(false);
-    }
     const leave = () =>{
         if(saved == false){
             Alert.alert('Are you sure you want to leave without saving?', 'closing will delete the note',[
@@ -54,17 +42,24 @@ const NewNote = ({navigation}) => {
                 },
                 {
                     text:'Save',
-                    onPress: () => saveLeave
+                    onPress: () => navigation.navigate('Notes')
                 }
             ])
         }else{
             navigation.navigate('Notes')
         }
     }
-    const saveLeave = () =>{
-        
-        navigation.navigate('Notes')
+    const loadNote = async () =>{
+        const note = await API.graphql({
+            query:queries.getNotes,
+            variables:{id:id}
+        })
+        setText(note.data.getNotes.content)
+        setDates(note.data.getNotes.date)
     }
+    useEffect(() =>{
+        loadNote();
+    });
 
     return(
         <View >
@@ -74,20 +69,23 @@ const NewNote = ({navigation}) => {
             </View>
             <View style={styles.center}>
                 <Text style={styles.text}>
-                    Add Note
+                    Notes
+                </Text>
+                <Text>
+                    {date}
                 </Text>
             </View>
             <View style={styles.right}>
-                <RegText style={styles.regTest1} onPress={saveNote}> Save </RegText>
+                <RegText style={styles.regTest1}> ... </RegText>
             </View>
         </View>
         <TextInput 
         editable
         multiline
+        value={value}
         numberOfLines={30}
         maxLength={360}
-        onChangeText={(text) => change(text)}
-        value={value}
+        onChangeText={text => setText(text)}
         style={styles.inp}/>
         </View>
 
@@ -106,13 +104,13 @@ const styles = StyleSheet.create({
         color:'black', 
         fontWeight:'600', 
     },regTest:{
-        fontSize:17,
+        fontSize:25,
         paddingLeft:15,
         color:'#2C96BF',
     },regTest1:{
-        fontSize:17,
+        fontSize:25,
         color:'#2C96BF',
-        paddingRight:15
+        paddingRight:15,
     },inp:{
         backgroundColor:"#ffffff",
         width:'85%',
@@ -139,4 +137,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default NewNote;
+export default OldNote;

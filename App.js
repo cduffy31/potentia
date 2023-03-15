@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 
 import * as Font from 'expo-font';
 
-import { Amplify } from 'aws-amplify'
+import { Amplify, DataStore } from '@aws-amplify/core'
 import awsconfig from './src/aws-exports'
 Amplify.configure(awsconfig)
 

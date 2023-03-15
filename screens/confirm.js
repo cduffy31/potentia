@@ -113,19 +113,9 @@ const style = StyleSheet.create({
         textAlign: 'center',
     },    reg:{
         alignSelf: 'flex-start',
-        fontSize:'17px',
+        fontSize:17,
         color:'#2C96BF',
     },
 });
 
 export default Confirm;
-
-/*
-                        <TouchableOpacity onPress={handleSubmit} style={{justifyContent:'center', alignItmes:'center'}}>
-                            <LinearGradient colors={['#2C96BF','#54B4B2']} style={{paddingBottom:15, paddingTop:15, borderRadius:10}}>          
-                                <ButtonText style={style.button}> 
-                                    Sign Up
-                                </ButtonText>
-                            </LinearGradient>
-                        </TouchableOpacity>
-*/
