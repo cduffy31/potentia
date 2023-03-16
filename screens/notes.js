@@ -2,37 +2,17 @@ import React, {useState, useEffect} from 'react';
 import {Image, Button, View, Text, StyleSheet, ScrollView, TouchableOpacity,Modal, Alert, RefreshControl} from 'react-native';
 import NewNote from './NewNote.js';
 import { LinearGradient } from 'expo-linear-gradient';
-import {API, graphqlOperation, Auth, } from 'aws-amplify';
+import {API, graphqlOperation, Auth, DataStore, } from 'aws-amplify';
 import * as queries from '../src/graphql/queries';
+import {Notes} from '../src/models'
 import {
-    StyledContainer,
-    InnerContainer,
-    PageLogo,
     PageTitle,
-    SubTitle,
-    StyledFormArea,
-    LeftIcon,
-    RightIcon,
-    StyledButton,
-    StyledTextInput,
-    StyledTextLabel,
-    ButtonText,
-    RegText,
-    Colors,
-    Line,
-    MsgBox,
 } from '../components/styles.js';
 
 import Icon from '../assets/icons/Icon';
 
-const Notes = ({navigation}) => {
-    const [modal, setModal] = useState(false);
+const NotesPage = ({navigation}) => {
     const [refreshing, setRefreshing] = useState(false);
-
-    const [notes, setNotes] = useState([
-        'imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome ',
-        'helloWorld',
-    ]);
 
     const [testNotes, setTests] = useState([]);
 
@@ -54,10 +34,10 @@ const Notes = ({navigation}) => {
 
     const loadNotes = async () => {   
         try{     
-            const testNote = await API.graphql(graphqlOperation(queries.listNotes));
-            setTests(testNote.data.listNotes.items);
+            const testNote = await DataStore.query(Notes);
+            setTests(testNote);
         }catch(error){
-            Alert.alert("Unable to load notes")
+            Alert.alert("Unable to load")
         }
     }
 
@@ -160,4 +140,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Notes;
+export default NotesPage;

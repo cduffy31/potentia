@@ -3,28 +3,12 @@ import {Image, View, Text, StyleSheet, ScrollView, Modal, TextInput, Alert} from
 import {Auth} from 'aws-amplify';
 import {API, graphqlOperation} from 'aws-amplify';
 import * as queries from '../src/graphql/queries';
-import { Note } from '../src/models';
+import { Notes } from '../src/models';
 
 import {
-    StyledContainer,
-    InnerContainer,
-    PageLogo,
-    PageTitle,
-    SubTitle,
-    StyledFormArea,
-    LeftIcon,
-    RightIcon,
-    StyledButton,
-    StyledTextInput,
-    StyledTextLabel,
-    ButtonText,
     RegText,
     Colors,
-    Line,
-    MsgBox,
 } from '../components/styles.js';
-
-const {brand, darkLight} = Colors;
 
 const OldNote = ({navigation, route}) => {
     const [value,setText] = useState("");
@@ -38,15 +22,15 @@ const OldNote = ({navigation, route}) => {
             Alert.alert('Are you sure you want to leave without saving?', 'closing will delete the note',[
                 {
                     text:"Don't Save",
-                    onPress: () => navigation.navigate('Notes')
+                    onPress: () => navigation.navigate('NotesPage')
                 },
                 {
                     text:'Save',
-                    onPress: () => navigation.navigate('Notes')
+                    onPress: () => navigation.navigate('NotesPage')
                 }
             ])
         }else{
-            navigation.navigate('Notes')
+            navigation.navigate('NotesPage')
         }
     }
     const loadNote = async () =>{

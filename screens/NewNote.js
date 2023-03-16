@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, View, Text, StyleSheet, ScrollView, Modal, TextInput, Alert} from 'react-native';
 import {Auth} from 'aws-amplify';
 import {API, graphqlOperation, DataStore} from 'aws-amplify';
@@ -15,8 +15,8 @@ const {brand, darkLight} = Colors;
 
 const NewNote = ({navigation}) => {
     const [value,setText] = useState("");
-    const [saved, setSaved] = useState(false)
-    const [note, setNote] = useState(null);
+    const [saved, setSaved] = useState(false);
+    const [date, setDate] = useState("");
 
     const saveNote = async () =>{
         if (value == ""){
@@ -24,17 +24,11 @@ const NewNote = ({navigation}) => {
         }else if(saved == true){
             Alert.alert("Saved");
         }else{
-            const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-            const d = new Date();
-            let name = month[d.getMonth()];
-            let day = d.getDate();
-            let year = d.getFullYear();
             try{
                 const newNote = await DataStore.save(new Notes({
-                    date:day+" "+name+" "+year,
+                    date:date,
                     content:value
                 }));
-                setNote(newNote);
             }catch(err){
                 Alert.alert(err);
             }
@@ -51,7 +45,7 @@ const NewNote = ({navigation}) => {
             Alert.alert('Are you sure you want to leave without saving?', 'closing will delete the note',[
                 {
                     text:"Don't Save",
-                    onPress: () => navigation.navigate('Notes')
+                    onPress: () => navigation.navigate('NotesPage')
                 },
                 {
                     text:'Save',
@@ -59,18 +53,13 @@ const NewNote = ({navigation}) => {
                 }
             ])
         }else{
-            navigation.navigate('Notes')
+            navigation.navigate('NotesPage')
         }
     }
     const saveLeave = async () =>{
-        const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-        const d = new Date();
-        let name = month[d.getMonth()];
-        let day = d.getDate();
-        let year = d.getFullYear();
         try{
             const newNote = await DataStore.save(new Notes({
-                date:day+" "+name+" "+year,
+                date:date,
                 content:value
             }));
         }catch(err){
@@ -78,6 +67,16 @@ const NewNote = ({navigation}) => {
         }
         navigation.navigate('Notes')
     }
+
+    useEffect(() => {
+        const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+        const d = new Date();
+        let name = month[d.getMonth()];
+        let day = d.getDate();
+        let year = String(d.getFullYear());
+        year = year.slice(-2)
+        setDate(day+" "+name+" "+year);
+    })
 
     return(
         <View >
@@ -88,6 +87,9 @@ const NewNote = ({navigation}) => {
             <View style={styles.center}>
                 <Text style={styles.text}>
                     Add Note
+                </Text>
+                <Text>
+                    {date}
                 </Text>
             </View>
             <View style={styles.right}>

@@ -154,9 +154,9 @@ function Title(){
        />
         <BottomTab.Screen
          name="NotesScreen"
-         component={NotesStack}
+         component={NotesStackNavigator}
          options={{
-          title:'Notes',
+          title:'NotesPage',
           headerShown: false,
            tabBarIcon: ({color, size}) => <Icon name='notes' size={size+5} color={color}/>
          }}
@@ -190,14 +190,13 @@ function Title(){
  }
 
  const NoteStack = createNativeStackNavigator();
- function NotesStack(){
+ function NotesStackNavigator(){
   return(
     <NoteStack.Navigator screenOptions={{
-      headerShown: false,
-    }}>
-      <NoteStack.Screen name={'Notes'} component={Notes} options={{title: 'Notes'}}/>
-      <NoteStack.Screen name={'NewNote'} component={NewNote} options={{title: 'New Note'}}/>    
-      <NoteStack.Screen name={'OldNote'} component={OldNote} options={{title: 'Old Note'}}/>    
+      headerShown: false    }}>
+      <NoteStack.Screen name={'NotesPage'} component={Notes} options={{title: 'NotesPage'}}/>
+      <NoteStack.Screen name={'NewNote'} component={NewNote} options={{title: 'New Note',tabBarVisible:false}}/>    
+      <NoteStack.Screen name={'OldNote'} component={OldNote} options={{title: 'Old Note',tabBarVisible:false}}/>    
     </NoteStack.Navigator>
   );
  }
