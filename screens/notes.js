@@ -1,73 +1,108 @@
-import React, {useState} from 'react';
-import {Image, View, Text, StyleSheet, ScrollView, Modal} from 'react-native';
-import {Auth} from 'aws-amplify';
+import React, {useState, useEffect} from 'react';
+import {Image, Button, View, Text, StyleSheet, ScrollView, TouchableOpacity,Modal, Alert, RefreshControl} from 'react-native';
 import NewNote from './NewNote.js';
-
+import { LinearGradient } from 'expo-linear-gradient';
+import {API, graphqlOperation, Auth, DataStore, } from 'aws-amplify';
+import * as queries from '../src/graphql/queries';
+import {Notes} from '../src/models'
 import {
-    StyledContainer,
-    InnerContainer,
-    PageLogo,
     PageTitle,
-    SubTitle,
-    StyledFormArea,
-    LeftIcon,
-    RightIcon,
-    StyledButton,
-    StyledTextInput,
-    StyledTextLabel,
-    ButtonText,
-    RegText,
-    Colors,
-    Line,
-    MsgBox,
 } from '../components/styles.js';
 
+import Icon from '../assets/icons/Icon';
 
-const {brand, darkLight} = Colors;
+const NotesPage = ({navigation}) => {
+    const [refreshing, setRefreshing] = useState(false);
 
-const Notes = ({navigation}) => {
-    const [modal, setModal] = useState(false);
+    const [testNotes, setTests] = useState([]);
 
-    const [notes, setNotes] = useState([
-        'imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome imposter Syndrome ',
-        'helloWorld',
-    ]);
+    const noteCheck = (string) => {
+        if(string.length < 20){
+            return string;
+        }else{
+            return string.substring(0,16)+" ..."
+        }
+    }
+
+    const oldNote = (noteDetails) =>{
+        navigation.navigate('OldNote',{id:noteDetails})
+    }
+
+    const newNote = () => {
+        navigation.navigate('NewNote');
+    }
+
+    const loadNotes = async () => {   
+        try{     
+            const testNote = await DataStore.query(Notes);
+            setTests(testNote);
+        }catch(error){
+            Alert.alert("Unable to load")
+        }
+    }
+
+    const onRefresh = () =>{
+        loadNotes();
+    }
+
+    useEffect(() => {
+        loadNotes()
+    }, []);
+
     return (
-        <View style={{flex:1}}>
+        <View style={{flex:1, paddingTop:55, backgroundColor:'#F5F5F5'}}>
+            <PageTitle style={{ alignSelf: 'center', fontSize:17, color:'black', fontWeight:'600' }}>
+                Notes
+            </PageTitle>
+            <View style={{flex:1}}>
             <ScrollView style={styles.contain} 
-            contentContainerStyle={{ 
-                flexGrow: 1, justifyContent: 'space-start',
-                alignItems:'center' }}>
+                contentContainerStyle={{ 
+                    flexGrow: 1, justifyContent: 'space-start',
+                    alignItems:'center' }}
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
+                }
+                >
                 {
-                    notes.map(
-                        (note,index) =>(
-                        <View key={index} style={styles.note}>
-                            <View style={{flex:4, paddingTop:10}}>
+                    testNotes.map(
+                        (note) =>(
+                        <View key={note.id} style={styles.note}>
+                            <View style={{flex:7, paddingTop:15, paddingLeft:10}}>
                             <Text style={{marginBottom:9, color:'#7A7A7A'}}>
-                                31 march 2022
+                                {note.date}
                             </Text>
-                            <Text numberOfLines={1}>
-                                {note}
+                            <Text numberOfLines={1} style={{marginBottom:10}}>
+                                {
+                                    noteCheck(note.content)
+                                }
                             </Text>
                             </View>
-                            <View style={{flex:1}}>
-                                <StyledButton style={{height:30}}>
-
-                                </StyledButton>
+                            <View style={{flex:1, justifyContent:'center'}}>
+                                <TouchableOpacity onPress={() => oldNote(note.id)}>
+                                    <Icon name="eye" color="#2C96BF"  size={30}/>
+                                </TouchableOpacity>
                             </View>
                         </View>
                         )
                     )
                 }
             </ScrollView>
-            <View style={{justifyContent:'center', alignItems:'center'}}>
-                <StyledButton style={styles.button}>
-                    <ButtonText>
-                        +   Add note
-                    </ButtonText>
-                </StyledButton>
-            </View>
+            <View style={{position: 'absolute', bottom:25, right:0, left:0, alignItems:'center'}}>
+            <TouchableOpacity onPress={() => navigation.navigate('NewNote')} style={{width:'50%'}}>
+                <View style={{justifyContent:'center', alignItems:'center', marginBottom:15}}>
+                    <LinearGradient colors={['#2C96BF','#54B4B2']} style={styles.button} >
+                        <Text style={{fontSize:30, paddingRight:10, color:"#FFFFFF"} }>
+                            +   
+                        </Text>
 
+                        <Text style={{paddingTop:5, color:"#FFFFFF", fontSize:15, fontWeight:'600'}}>
+                        Add Note
+                        </Text>
+                    </LinearGradient>
+                </View>
+            </TouchableOpacity>
+            </View>
+            </View>
         </View>
     );
 }
@@ -81,9 +116,11 @@ const styles = StyleSheet.create({
         //alignItems:'center',
     },
     button:{
-        width:'90%',
+        padding: 15,
+        alignItems: 'center',
         justifyContent:'center',
-        alignItems:'center',
+        borderRadius: 15,
+        flexDirection:'row'
     },
     note:{
         backgroundColor:'#ffffff',
@@ -91,18 +128,16 @@ const styles = StyleSheet.create({
         padding:10,
         marginBottom:15,
         width:'90%',
-        shadowColor: '#7F5DF0',
-        shadowOffset: {
-            width: 0,
-            height: 4,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.5,
         elevation: 5,
         padding:5, 
         borderRadius: 10,
         flexDirection:'row',
+    },
+    text:{
+       // backgroundColor: 'transparent',
+        fontSize: 15,
+        color: '#fff',
     }
 })
 
-export default Notes;
+export default NotesPage;

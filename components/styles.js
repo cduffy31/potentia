@@ -7,9 +7,9 @@ const StatusBarHeight = Constants.statusBarHeight;
 
 export const Colors = {
     primary:'#ffffff',
-    secondary:'#ffffff',
+    secondary:'#54B4B2',
     tertiary:"#2C96BF",
-    darkLight:"9CA3AF",
+    darkLight:"#9CA3AF",
     brand:'#2C96BF',
     green:'#10B981',
     red:'#EF4444',
@@ -20,13 +20,13 @@ const {primary, secondary, tertiary, darkLight, brand, green, red} = Colors;
 export const StyledContainer = styled.View`
     flex:1;
     padding: 20px;
-    padding-top: ${StatusBarHeight + 40};
+    padding-top: ${StatusBarHeight + 40}px;
     background-color: ${primary};
 `;
 export const OuterContainer = styled.View`
     flex:1;
     padding: 20px;
-    padding-top:${StatusBarHeight + 30};
+    padding-top:${StatusBarHeight + 30}px;
     background-color: ${primary}; 
 `
 
@@ -51,7 +51,7 @@ export const PageLogo = styled.Image`
 
 export const PageTitle = styled.Text`
     font-size:28px;
-    text-align:left;
+    align-text:left;
     color:${darkLight};
 
 `;
@@ -84,7 +84,7 @@ export const StyledTextInput = styled.TextInput`
 export const StyledTextLabel = styled.Text`
     color:${tertiary};
     font-size:13px;
-    text-align:left;
+    align-text:left;
 `;
 
 export const LeftIcon = styled.View`
