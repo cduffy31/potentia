@@ -50,8 +50,17 @@ const Login = ({navigation}) => {
                         }
                         setLoading(true);
                         try{
-                            const response = await Auth.signIn(values.email, values.password);
-                            console.log(response);
+                            const response = await Auth.signIn(values.email, values.password)
+                                .then((user) =>{
+                                    if(user.challengeName=='NEW_PASSWORD_REQUIRED'){
+                                        console.log("in if")
+                                        Auth.completeNewPassword(
+                                            user, 
+                                            values.password,
+                                        )
+                                    }
+                                })
+                            //console.log(response);
                         }catch(e){
                             Alert.alert(e.message);
                         }finally{

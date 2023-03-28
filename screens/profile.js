@@ -1,8 +1,10 @@
 import React from 'react';
 import {Image, View, Text, StyleSheet, Button, TouchableOpacity} from 'react-native';
-import {Auth} from 'aws-amplify';
+import {Auth, DataStore} from 'aws-amplify';
 import Icon from '../assets/icons/Icon';
 import { LinearGradient } from 'expo-linear-gradient';
+import {Notes} from '../src/models'
+
 
 import {
     StyledContainer,
@@ -26,7 +28,8 @@ import {
 const {brand, darkLight} = Colors;
 
 const Profile = ({navigation}) => {
-    const signOut = () => {
+    const signOut = async () => {
+        const checl = await DataStore.clear()
         Auth.signOut();
     }
     return (

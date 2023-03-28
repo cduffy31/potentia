@@ -38,7 +38,7 @@ const Home  = ({navigation}) => {
                     </Text>
                 </View>
                 <View style={{ justifyContent: 'center', padding: 10, borderRadius: 5, }}>
-                    <Text style={{ backgroundColor: 'rgba(97, 191, 189, 0.1)', padding: 5, borderRadius: 10, color: '#64BFBD' }}>22 Feb - 11 Mar</Text>
+                    <Text style={styles.dates}>22 Feb - 11 Mar</Text>
                 </View>
                 
             </View>
@@ -116,6 +116,13 @@ const styles = StyleSheet.create({
         top:5,
         position:'absolute',
         ...StyleSheet.absoluteFillObject,
+    },
+    dates:{
+        backgroundColor: 'rgba(97, 191, 189, 0.1)', 
+        padding: 5, 
+        borderRadius: 10, 
+        color: '#64BFBD',
+        borderRadius:10 
     }
 })
 

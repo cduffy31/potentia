@@ -65,7 +65,7 @@ const NewNote = ({navigation}) => {
         }catch(err){
             Alert.alert(err);
         }
-        navigation.navigate('Notes')
+        navigation.navigate('NotesPage')
     }
 
     useEffect(() => {
@@ -80,30 +80,30 @@ const NewNote = ({navigation}) => {
 
     return(
         <View >
-        <View style={styles.body}>
-            <View style={styles.left}>
-                <RegText style={styles.regTest} onPress={leave}> {'<'} </RegText>
+            <View style={styles.body}>
+                <View style={styles.left}>
+                    <RegText style={styles.regTest} onPress={leave}> {'<'} </RegText>
+                </View>
+                <View style={styles.center}>
+                    <Text style={styles.text}>
+                        Add Note
+                    </Text>
+                    <Text>
+                        {date}
+                    </Text>
+                </View>
+                <View style={styles.right}>
+                    <RegText style={styles.regTest1} onPress={saveNote}> Save </RegText>
+                </View>
             </View>
-            <View style={styles.center}>
-                <Text style={styles.text}>
-                    Add Note
-                </Text>
-                <Text>
-                    {date}
-                </Text>
-            </View>
-            <View style={styles.right}>
-                <RegText style={styles.regTest1} onPress={saveNote}> Save </RegText>
-            </View>
-        </View>
-        <TextInput 
-        editable
-        multiline
-        numberOfLines={30}
-        maxLength={360}
-        onChangeText={(text) => change(text)}
-        value={value}
-        style={styles.inp}/>
+            <TextInput 
+            editable
+            multiline
+            numberOfLines={30}
+            maxLength={360}
+            onChangeText={(text) => change(text)}
+            value={value}
+            style={styles.inp}/>
         </View>
 
     );  
