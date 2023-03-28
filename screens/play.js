@@ -66,6 +66,9 @@ const Play = () => {
             flexDirection:'column',
             backgroundColor:'#FEFEFE'}}>
             <Image source={require('../assets/images/icon1.png')} style={{flex:3, alignSelf:'center',height:300, width:300}} resizeMode="contain"/>
+            <Text>
+                Yo
+            </Text>
             <View style={{flex:1}}>
             <TouchableOpacity resizeMode='contain' style={style.styled} onPress={playSound}>
                 <LinearGradient colors={['#2C96BF','#54B4B2']} style={style.styled}>
